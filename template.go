@@ -147,7 +147,7 @@ func (tpl *Template) newBufferAndExecute(context Context) (*bytes.Buffer, error)
 	return buffer, nil
 }
 
-// Executes the template with the given context and writes to writer (io.Writer)
+// ExecuteWriter executes the template with the given context and writes to writer (io.Writer)
 // on success. Context can be nil. Nothing is written on error; instead the error
 // is being returned.
 func (tpl *Template) ExecuteWriter(context Context, writer io.Writer) error {
@@ -162,7 +162,7 @@ func (tpl *Template) ExecuteWriter(context Context, writer io.Writer) error {
 	return nil
 }
 
-// Same as ExecuteWriter. The only difference between both functions is that
+// ExecuteWriterUnbuffered; Same as ExecuteWriter. The only difference between both functions is that
 // this function might already have written parts of the generated template in the
 // case of an execution error because there's no intermediate buffer involved for
 // performance reasons. This is handy if you need high performance template
@@ -171,7 +171,7 @@ func (tpl *Template) ExecuteWriterUnbuffered(context Context, writer io.Writer) 
 	return tpl.newTemplateWriterAndExecute(context, writer)
 }
 
-// Executes the template and returns the rendered template as a []byte
+// ExecuteBytes executes the template and returns the rendered template as a []byte
 func (tpl *Template) ExecuteBytes(context Context) ([]byte, error) {
 	// Execute template
 	buffer, err := tpl.newBufferAndExecute(context)
@@ -181,7 +181,7 @@ func (tpl *Template) ExecuteBytes(context Context) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-// Executes the template and returns the rendered template as a string
+// Execute; the template and returns the rendered template as a string
 func (tpl *Template) Execute(context Context) (string, error) {
 	// Execute template
 	buffer, err := tpl.newBufferAndExecute(context)

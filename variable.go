@@ -472,7 +472,7 @@ func (v *nodeFilteredVariable) Evaluate(ctx *ExecutionContext) (*Value, *Error) 
 	return value, nil
 }
 
-// IDENT | IDENT.(IDENT|NUMBER)...
+// parseVariableOrLiteral; IDENT | IDENT.(IDENT|NUMBER)...
 func (p *Parser) parseVariableOrLiteral() (IEvaluator, *Error) {
 	t := p.Current()
 

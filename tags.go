@@ -55,7 +55,7 @@ func init() {
 	tags = make(map[string]*tag)
 }
 
-// Registers a new tag. You usually want to call this
+// RegisterTag registers a new tag. You usually want to call this
 // function in the tag's init() function:
 // http://golang.org/doc/effective_go.html#init
 //
@@ -73,7 +73,7 @@ func RegisterTag(name string, parserFn TagParser) error {
 	return nil
 }
 
-// Replaces an already registered tag with a new implementation. Use this
+// ReplaceTag replaces an already registered tag with a new implementation. Use this
 // function with caution since it allows you to change existing tag behaviour.
 func ReplaceTag(name string, parserFn TagParser) error {
 	_, existing := tags[name]
@@ -87,7 +87,7 @@ func ReplaceTag(name string, parserFn TagParser) error {
 	return nil
 }
 
-// Tag = "{%" IDENT ARGS "%}"
+// parseTagElement; Tag = "{%" IDENT ARGS "%}"
 func (p *Parser) parseTagElement() (INodeTag, *Error) {
 	p.Consume() // consume "{%"
 	tokenName := p.MatchType(TokenIdentifier)

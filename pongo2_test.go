@@ -7,7 +7,7 @@ import (
 	. "github.com/go-check/check"
 )
 
-// Hook up gocheck into the "go test" runner.
+// Test hooks up gocheck into the "go test" runner.
 func Test(t *testing.T) { TestingT(t) }
 
 type TestSuite struct {

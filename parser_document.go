@@ -1,6 +1,6 @@
 package pongo2
 
-// Doc = { ( Filter | Tag | HTML ) }
+// parseDocElement; Doc = { ( Filter | Tag | HTML ) }
 func (p *Parser) parseDocElement() (INode, *Error) {
 	t := p.Current()
 

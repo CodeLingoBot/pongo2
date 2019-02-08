@@ -38,7 +38,7 @@ func (e *Error) updateFromTokenIfNeeded(template *Template, t *Token) *Error {
 	return e
 }
 
-// Returns a nice formatted error string.
+// Error returns a nice formatted error string.
 func (e *Error) Error() string {
 	s := "[Error"
 	if e.Sender != "" {

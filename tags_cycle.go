@@ -63,6 +63,7 @@ func (node *tagCycleNode) Execute(ctx *ExecutionContext, writer TemplateWriter) 
 	return nil
 }
 
+// tagCycleParser; 
 // HINT: We're not supporting the old comma-separated list of expressions argument-style
 func tagCycleParser(doc *Parser, start *Token, arguments *Parser) (INodeTag, *Error) {
 	cycleNode := &tagCycleNode{

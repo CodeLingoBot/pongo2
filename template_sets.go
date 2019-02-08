@@ -243,7 +243,7 @@ func (set *TemplateSet) logf(format string, args ...interface{}) {
 	}
 }
 
-// Logging function (internally used)
+// logf; Logging function (internally used)
 func logf(format string, items ...interface{}) {
 	if debug {
 		logger.Printf(format, items...)

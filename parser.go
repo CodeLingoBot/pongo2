@@ -38,7 +38,7 @@ type Parser struct {
 	template *Template
 }
 
-// Creates a new parser to parse tokens.
+// newParser creates a new parser to parse tokens.
 // Used inside pongo2 to parse documents and to provide an easy-to-use
 // parser for tag authors
 func newParser(name string, tokens []*Token, template *Template) *Parser {
@@ -58,17 +58,17 @@ func (p *Parser) Consume() {
 	p.ConsumeN(1)
 }
 
-// Consume N tokens. They will be gone forever.
+// ConsumeN; N tokens. They will be gone forever.
 func (p *Parser) ConsumeN(count int) {
 	p.idx += count
 }
 
-// Returns the current token.
+// Current returns the current token.
 func (p *Parser) Current() *Token {
 	return p.Get(p.idx)
 }
 
-// Returns the CURRENT token if the given type matches.
+// MatchType returns the CURRENT token if the given type matches.
 // Consumes this token on success.
 func (p *Parser) MatchType(typ TokenType) *Token {
 	if t := p.PeekType(typ); t != nil {
@@ -78,7 +78,7 @@ func (p *Parser) MatchType(typ TokenType) *Token {
 	return nil
 }
 
-// Returns the CURRENT token if the given type AND value matches.
+// Match returns the CURRENT token if the given type AND value matches.
 // Consumes this token on success.
 func (p *Parser) Match(typ TokenType, val string) *Token {
 	if t := p.Peek(typ, val); t != nil {
@@ -88,7 +88,7 @@ func (p *Parser) Match(typ TokenType, val string) *Token {
 	return nil
 }
 
-// Returns the CURRENT token if the given type AND *one* of
+// MatchOne returns the CURRENT token if the given type AND *one* of
 // the given values matches.
 // Consumes this token on success.
 func (p *Parser) MatchOne(typ TokenType, vals ...string) *Token {
@@ -101,19 +101,19 @@ func (p *Parser) MatchOne(typ TokenType, vals ...string) *Token {
 	return nil
 }
 
-// Returns the CURRENT token if the given type matches.
+// PeekType returns the CURRENT token if the given type matches.
 // It DOES NOT consume the token.
 func (p *Parser) PeekType(typ TokenType) *Token {
 	return p.PeekTypeN(0, typ)
 }
 
-// Returns the CURRENT token if the given type AND value matches.
+// Peek returns the CURRENT token if the given type AND value matches.
 // It DOES NOT consume the token.
 func (p *Parser) Peek(typ TokenType, val string) *Token {
 	return p.PeekN(0, typ, val)
 }
 
-// Returns the CURRENT token if the given type AND *one* of
+// PeekOne returns the CURRENT token if the given type AND *one* of
 // the given values matches.
 // It DOES NOT consume the token.
 func (p *Parser) PeekOne(typ TokenType, vals ...string) *Token {
@@ -126,7 +126,7 @@ func (p *Parser) PeekOne(typ TokenType, vals ...string) *Token {
 	return nil
 }
 
-// Returns the tokens[current position + shift] token if the
+// PeekN returns the tokens[current position + shift] token if the
 // given type AND value matches for that token.
 // DOES NOT consume the token.
 func (p *Parser) PeekN(shift int, typ TokenType, val string) *Token {
@@ -139,7 +139,7 @@ func (p *Parser) PeekN(shift int, typ TokenType, val string) *Token {
 	return nil
 }
 
-// Returns the tokens[current position + shift] token if the given type matches.
+// PeekTypeN returns the tokens[current position + shift] token if the given type matches.
 // DOES NOT consume the token for that token.
 func (p *Parser) PeekTypeN(shift int, typ TokenType) *Token {
 	t := p.Get(p.idx + shift)
@@ -151,17 +151,17 @@ func (p *Parser) PeekTypeN(shift int, typ TokenType) *Token {
 	return nil
 }
 
-// Returns the UNCONSUMED token count.
+// Remaining returns the UNCONSUMED token count.
 func (p *Parser) Remaining() int {
 	return len(p.tokens) - p.idx
 }
 
-// Returns the total token count.
+// Count returns the total token count.
 func (p *Parser) Count() int {
 	return len(p.tokens)
 }
 
-// Returns tokens[i] or NIL (if i >= len(tokens))
+// Get returns tokens[i] or NIL (if i >= len(tokens))
 func (p *Parser) Get(i int) *Token {
 	if i < len(p.tokens) && i >= 0 {
 		return p.tokens[i]
@@ -169,7 +169,7 @@ func (p *Parser) Get(i int) *Token {
 	return nil
 }
 
-// Returns tokens[current-position + shift] or NIL
+// GetR returns tokens[current-position + shift] or NIL
 // (if (current-position + i) >= len(tokens))
 func (p *Parser) GetR(shift int) *Token {
 	i := p.idx + shift
@@ -207,7 +207,7 @@ func (p *Parser) Error(msg string, token *Token) *Error {
 	}
 }
 
-// Wraps all nodes between starting tag and "{% endtag %}" and provides
+// WrapUntilTag wraps all nodes between starting tag and "{% endtag %}" and provides
 // one simple interface to execute the wrapped nodes.
 // It returns a parser to process provided arguments to the tag.
 func (p *Parser) WrapUntilTag(names ...string) (*NodeWrapper, *Parser, *Error) {
@@ -266,7 +266,7 @@ func (p *Parser) WrapUntilTag(names ...string) (*NodeWrapper, *Parser, *Error) {
 		p.lastToken)
 }
 
-// Skips all nodes between starting tag and "{% endtag %}"
+// SkipUntilTag skips all nodes between starting tag and "{% endtag %}"
 func (p *Parser) SkipUntilTag(names ...string) *Error {
 	for p.Remaining() > 0 {
 		// New tag, check whether we have to stop wrapping here

@@ -103,7 +103,7 @@ func (fc *filterCall) Execute(v *Value, ctx *ExecutionContext) (*Value, *Error) 
 	return filteredValue, nil
 }
 
-// Filter = IDENT | IDENT ":" FilterArg | IDENT "|" Filter
+// parseFilter; = IDENT | IDENT ":" FilterArg | IDENT "|" Filter
 func (p *Parser) parseFilter() (*filterCall, *Error) {
 	identToken := p.MatchType(TokenIdentifier)
 
